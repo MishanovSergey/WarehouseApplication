@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseApp", "WarehouseApp\WarehouseApp.csproj", "{B631E52E-5C46-48B5-8583-7D062BB88C17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbConnection", "DbConnection\DbConnection.csproj", "{95AF568A-1B1D-43AB-9DDB-9262EC6D7161}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{433E79AB-4FE6-4B9F-9FA9-E849FABBFA89}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B631E52E-5C46-48B5-8583-7D062BB88C17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B631E52E-5C46-48B5-8583-7D062BB88C17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B631E52E-5C46-48B5-8583-7D062BB88C17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B631E52E-5C46-48B5-8583-7D062BB88C17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95AF568A-1B1D-43AB-9DDB-9262EC6D7161}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95AF568A-1B1D-43AB-9DDB-9262EC6D7161}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95AF568A-1B1D-43AB-9DDB-9262EC6D7161}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95AF568A-1B1D-43AB-9DDB-9262EC6D7161}.Release|Any CPU.Build.0 = Release|Any CPU
+		{433E79AB-4FE6-4B9F-9FA9-E849FABBFA89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{433E79AB-4FE6-4B9F-9FA9-E849FABBFA89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{433E79AB-4FE6-4B9F-9FA9-E849FABBFA89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{433E79AB-4FE6-4B9F-9FA9-E849FABBFA89}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WarehouseApp": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

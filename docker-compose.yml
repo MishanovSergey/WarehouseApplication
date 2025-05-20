@@ -1,0 +1,12 @@
+services:
+  warehouse.database:
+    container_name: warehouse.database
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: warehouse
+    volumes:
+      - ./.containers/warehouse-db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    image: postgres:latest
