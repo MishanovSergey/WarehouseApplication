@@ -1,26 +1,32 @@
-﻿using DbConnection.Models;
-using DbConnection;
+﻿using DbConnection;
+using DbConnection.Repositories;
 using Microsoft.EntityFrameworkCore;
+using WarehouseApp.Contracts.Models;
 using WarehouseApp.Helpers;
 
 namespace WarehouseApp
 {
-    internal class Program
+    public class Program
     {
+        const int NumOfBoxes = 3;
+        const string userOptions = "Введите один из возможных вариантов:" +
+                    "\n\"1\" - Добавить новые коробки и паллеты на склад" +
+                    "\n\"2\" - Вывести сгруппированные по сроку годности паллеты" +
+                    "\n\"3\" - Вывести отсортированные по объему паллеты, содержащие коробки с наибольшим сроком годности" +
+                    "\n\"4\" - Закончить работу\n";
+        const string palletsVolume = "Объемы паллет, содержащих коробки с максимальным сроком годности:";
+        const string incorrectOption = "Выбран некорректный вариант";
         static void Main(string[] args)
         {
             using var context = new ApplicationContext();
+            var palletRepository = new PalletRepository(context);
 
             context.Database.Migrate();
 
             string userOption;
             do
             {
-                Console.WriteLine("Введите один из возможных вариантов:" +
-                    "\n\"1\" - Добавить новые коробки и паллеты на склад" +
-                    "\n\"2\" - Вывести сгруппированные по сроку годности паллеты" +
-                    "\n\"3\" - Вывести отсортированные по объему паллеты, содержащие коробки с наибольшим сроком годности" +
-                    "\n\"4\" - Закончить работу\n");
+                Console.WriteLine(userOptions);
 
                 userOption = Console.ReadLine();
                 Console.WriteLine("\n");
@@ -28,20 +34,25 @@ namespace WarehouseApp
                 switch (userOption)
                 {
                     case "1":
-                        (int PalletsCount, int BoxesCount) resultObjectsCount = AddItemsHelper.AddItems(context);
+                        List<Pallet> inputPallets = AddItemsHelper.AddItems();
 
-                        Console.WriteLine($"Объекты помещены на склад." +
-                            $"\nВсего паллет: {resultObjectsCount.PalletsCount}" +
-                            $"\nВсего коробок: {resultObjectsCount.PalletsCount}\n");
+                        foreach (var input in inputPallets)
+                        {
+                            palletRepository.Create(input);
+                        }
+
+                        Console.WriteLine("Объекты помещены на склад." +
+                            $"\nПомещено паллет: {inputPallets.Count}" +
+                            $"\nПомещено коробок: {inputPallets.SelectMany(p => p.Boxes).Count()}\n");
                         break;
                     case "2":
-                        var palletsByExpirationDate = SortedItemsHelper.GetExpirationDatePallets(context);
+                        var grupedPallets = SortedItemsHelper.GetExpirationDatePallets(palletRepository);
 
-                        foreach (var pallets in palletsByExpirationDate)
+                        foreach (var pallets in grupedPallets)
                         {
-                            Console.WriteLine($"Срок годности: {pallets.ExpirationPalletDate}");
+                            Console.WriteLine($"Срок годности: {pallets.GroupKey}");
 
-                            foreach (var pallet in pallets.WeightSortedPallets)
+                            foreach (var pallet in pallets.Pallets)
                             {
                                 Console.WriteLine($"\tВес паллеты: {pallet.Weight}");
                             }
@@ -50,9 +61,9 @@ namespace WarehouseApp
                         Console.WriteLine("\n");
                         break;
                     case "3":
-                        var maxExpirationDatePallets = SortedItemsHelper.GetMaxDatePallets(context);
+                        var maxExpirationDatePallets = SortedItemsHelper.GetMaxDatePallets(palletRepository, NumOfBoxes);
 
-                        Console.WriteLine("Объемы паллет, содержащих коробки с максимальным сроком годности:");
+                        Console.WriteLine(palletsVolume);
 
                         foreach (var pallet in maxExpirationDatePallets)
                         {
@@ -64,7 +75,7 @@ namespace WarehouseApp
                     case "4":
                         break;
                     default:
-                        Console.WriteLine("Выбран некорректный вариант");
+                        Console.WriteLine(incorrectOption);
                         break;
                 }
             }while (userOption != "4");

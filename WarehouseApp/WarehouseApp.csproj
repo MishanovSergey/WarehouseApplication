@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\WarehouseApp.Contracts\WarehouseApp.Contracts.csproj" />
     <ProjectReference Include="..\DbConnection\DbConnection.csproj" />
   </ItemGroup>
 
